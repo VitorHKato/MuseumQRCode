@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <EditText
+        android:id="@+id/RegisterEditTextUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="154dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="User"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/RegisterEditTextEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        app:layout_constraintStart_toStartOf="@+id/RegisterEditTextUser"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterEditTextUser" />
+
+    <EditText
+        android:id="@+id/RegisterEditTextPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="(XX)XXXXX-XXXX"
+        app:layout_constraintStart_toStartOf="@+id/RegisterEditTextEmail"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterEditTextEmail" />
+
+    <EditText
+        android:id="@+id/RegisterEditTextPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Password"
+        app:layout_constraintStart_toStartOf="@+id/RegisterEditTextPhone"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterEditTextPhone" />
+
+    <EditText
+        android:id="@+id/RegisterEditTextConfirmPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Confirm password"
+        app:layout_constraintStart_toStartOf="@+id/RegisterEditTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterEditTextPassword" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
