@@ -2,6 +2,7 @@ package com.example.qrcodemuseum;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -54,4 +55,45 @@ public class HomeActivity extends AppCompatActivity {
 
         return items;
     }
+
+    public void scanQRCode(View view) {
+        Toast.makeText(
+                getApplicationContext(),
+                "Scan QRCode.",
+                Toast.LENGTH_LONG
+        ).show();
+
+    }
+
+    public void checkIn(View view) {
+        Toast.makeText(
+                getApplicationContext(),
+                "Check In.",
+                Toast.LENGTH_LONG
+        ).show();
+
+    }
+
+    public void createItem(View view) {
+        Toast.makeText(
+                getApplicationContext(),
+                "Create Item.",
+                Toast.LENGTH_LONG
+        ).show();
+
+        Intent intent = new Intent(this, CreateItemActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    //create model class item
+    //add go back code
+
+//    @Override
+//    public void onBackPressed()
+//    {
+//        Intent intent = new Intent(getApplicationContext(), Cadastro2Activity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 }

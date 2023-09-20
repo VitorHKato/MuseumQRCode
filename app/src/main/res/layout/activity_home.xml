@@ -13,6 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="32dp"
         android:text="Scan QRCode"
+        android:onClick="scanQRCode"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/HomeButtonCheckIn"
         app:layout_constraintStart_toStartOf="parent" />
@@ -25,6 +26,7 @@
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="32dp"
         android:text="Check In"
+        android:onClick="checkIn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/HomeButtonCreateItem"
         app:layout_constraintStart_toEndOf="@+id/HomeButtonReadQRCode" />
@@ -36,6 +38,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:text="Create Item"
+        android:onClick="createItem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/HomeButtonCheckIn" />
