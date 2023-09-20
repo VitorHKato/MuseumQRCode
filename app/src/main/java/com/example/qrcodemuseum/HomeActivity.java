@@ -48,7 +48,12 @@ public class HomeActivity extends AppCompatActivity {
                 // Display a toast message with the selected item
                 Toast.makeText(getApplicationContext(), "Selected Item: " + selectedItem, Toast.LENGTH_SHORT).show();
 
+                //Send the object to ItemActivity
+                Item item = new Item();
+                item = populateItems().get(position);
+
                 Intent intent = new Intent(getApplicationContext(), ItemActivity.class);
+                intent.putExtra("item", item);
                 startActivity(intent);
                 finish();
             }
