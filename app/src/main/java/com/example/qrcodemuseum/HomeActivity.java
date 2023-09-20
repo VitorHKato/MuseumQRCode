@@ -10,6 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.qrcodemuseum.model.Item;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
 
     //Components
@@ -27,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
                 getApplicationContext(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
-                populateItems()
+                returnTitles(populateItems())
         );
 
         //Add adapter
@@ -38,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item
-                String selectedItem = populateItems()[position];
+                String selectedItem = returnTitles(populateItems())[position];
 
                 // Display a toast message with the selected item
                 Toast.makeText(getApplicationContext(), "Selected Item: " + selectedItem, Toast.LENGTH_SHORT).show();
@@ -47,13 +52,35 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    public List<Item> populateItems(){
+        List<Item> items = new ArrayList<>();
 
-    public String[] populateItems(){
-        String[] items = {
-                "Mac 1990", "Windows Phone 2000", "Leitor de DVD", "asd", "dfasd", "saddas", "saddas", "saddas", "saddas", "saddas", "saddas", "saddas"
-        };
+        Item i = new Item("Mac 1975", 1975, "mac asdasd");
+        items.add(i);
+        Item i2 = new Item("Windows Phone 1999", 1999, "windows phone asdasd");
+        items.add(i2);
+        Item i3 = new Item("Nokia 1260", 1260, "Nokia 1260");
+        items.add(i3);
+        Item i4 = new Item("Mac 1975", 1975, "asdasdasdsad");
+        items.add(i4);
+        Item i5 = new Item("Mac 1975", 1975, "asdasdasdsad");
+        items.add(i5);
+        Item i6 = new Item("Mac 1975", 1975, "asdasdasdsad");
+        items.add(i6);
+        Item i7 = new Item("Mac 1975", 1975, "asdasdasdsad");
+        items.add(i7);
 
         return items;
+    }
+
+    public String[] returnTitles(List<Item> itens) {
+        String[] listItensTitle = new String[itens.size()];
+
+        for(int i=0; i<itens.size(); i++) {
+            listItensTitle[i] = itens.get(i).getTitle();
+        }
+
+        return listItensTitle;
     }
 
     public void scanQRCode(View view) {
