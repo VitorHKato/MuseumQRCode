@@ -26,24 +26,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(View view) {
 
-        Toast.makeText(
-                getApplicationContext(),
-                editTextUser.getText().toString() + " " + editTextPassword.getText().toString(),
-                Toast.LENGTH_LONG
-        ).show();
+        //TODO: Consultar no banco se o user e a senha existem no banco
+        if(true) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    editTextUser.getText().toString() + " " + editTextPassword.getText().toString(),
+                    Toast.LENGTH_LONG
+            ).show();
 
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-        finish();
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Incorrect credentials",
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+
     }
 
     public void signUp(View view) {
-        Toast.makeText(
-                getApplicationContext(),
-                "Sign up view.",
-                Toast.LENGTH_LONG
-        ).show();
-
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
         finish();
