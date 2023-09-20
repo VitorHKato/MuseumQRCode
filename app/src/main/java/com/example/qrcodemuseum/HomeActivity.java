@@ -86,9 +86,6 @@ public class HomeActivity extends AppCompatActivity {
         finish();
     }
 
-    //create model class item
-    //add go back code
-
 //    @Override
 //    public void onBackPressed()
 //    {
@@ -96,4 +93,7 @@ public class HomeActivity extends AppCompatActivity {
 //        startActivity(intent);
 //        finish();
 //    }
+
+    //create model class item
+
 }

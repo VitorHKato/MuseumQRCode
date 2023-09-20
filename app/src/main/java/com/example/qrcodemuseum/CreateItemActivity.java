@@ -2,6 +2,7 @@ package com.example.qrcodemuseum;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,5 +22,13 @@ public class CreateItemActivity extends AppCompatActivity {
                 "Saved",
                 Toast.LENGTH_LONG
         ).show();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
