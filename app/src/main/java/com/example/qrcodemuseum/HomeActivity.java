@@ -95,5 +95,6 @@ public class HomeActivity extends AppCompatActivity {
 //    }
 
     //create model class item
+    //add scroll in all activities
 
 }

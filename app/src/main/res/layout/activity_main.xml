@@ -10,21 +10,22 @@
         android:id="@+id/MainEditTextUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="89dp"
-        android:layout_marginRight="89dp"
+        android:layout_marginTop="72dp"
         android:ems="10"
         android:hint="@string/user"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/MainTextViewTitle"
+        app:layout_constraintStart_toStartOf="@+id/MainTextViewTitle"
         app:layout_constraintTop_toBottomOf="@+id/MainTextViewTitle" />
 
     <TextView
         android:id="@+id/MainTextViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="32dp"
         android:text="@string/title"
+        android:textSize="24dp"
+        app:fontFamily="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,22 +46,22 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="18dp"
+        android:layout_marginTop="64dp"
         android:onClick="login"
         android:text="@string/login"
-        app:layout_constraintBottom_toTopOf="@+id/MainButtonSignUp"
-        app:layout_constraintStart_toStartOf="@+id/MainButtonSignUp" />
+        app:layout_constraintEnd_toEndOf="@+id/MainEditTextPassword"
+        app:layout_constraintStart_toStartOf="@+id/MainEditTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/MainEditTextPassword" />
 
     <Button
         android:id="@+id/MainButtonSignUp"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
+        android:layout_marginTop="16dp"
         android:onClick="signUp"
         android:text="@string/signup"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/MainButtonLogin"
+        app:layout_constraintTop_toBottomOf="@+id/MainButtonLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,20 +10,19 @@
         android:id="@+id/RegisterEditTextUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginBottom="71dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="User"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/RegisterEditTextPhone"
-        app:layout_constraintEnd_toEndOf="@+id/RegisterEditTextPhone" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/RegisterEditTextEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
@@ -34,20 +33,20 @@
         android:id="@+id/RegisterEditTextPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="XXXXX-XXXX"
-        app:mask="(+55) 41 #####-####"
         android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/RegisterEditTextEmail"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterEditTextEmail"
+        app:mask="(+55) 41 #####-####" />
 
     <EditText
         android:id="@+id/RegisterEditTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPersonName"
@@ -58,7 +57,7 @@
         android:id="@+id/RegisterEditTextConfirmPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Confirm password"
         android:inputType="textPersonName"
@@ -69,13 +68,9 @@
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/RegisterEditTextConfirmPassword"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/RegisterButtonRegister"
         app:layout_constraintTop_toBottomOf="@+id/RegisterEditTextConfirmPassword">
 
         <RadioButton
@@ -90,5 +85,16 @@
             android:layout_height="wrap_content"
             android:text="Student" />
     </RadioGroup>
+
+    <Button
+        android:id="@+id/RegisterButtonRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:onClick="register"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
