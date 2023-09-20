@@ -49,7 +49,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="@+id/RegisterEditTextPhone"
         app:layout_constraintTop_toBottomOf="@+id/RegisterEditTextPhone" />
 
@@ -60,12 +60,12 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Confirm password"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="@+id/RegisterEditTextPassword"
         app:layout_constraintTop_toBottomOf="@+id/RegisterEditTextPassword" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/RegisterRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -92,9 +92,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:onClick="register"
-        android:text="Button"
+        android:text="Register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/RegisterRadioGroup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
