@@ -17,6 +17,8 @@ public class ItemActivity extends AppCompatActivity {
     private TextView year;
     private TextView description;
 
+    private Item item;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,7 @@ public class ItemActivity extends AppCompatActivity {
         description = findViewById(R.id.ItemTextViewDescription);
 
         Intent intent = getIntent();
-        Item item = (Item) intent.getSerializableExtra("item");
+        item = (Item) intent.getSerializableExtra("item");
 
         title.setText(item.getTitle());
         year.setText(item.getYear().toString());
@@ -40,6 +42,9 @@ public class ItemActivity extends AppCompatActivity {
                 "Delete",
                 Toast.LENGTH_LONG
         ).show();
+
+        //TODO: Implementar delete
+        //delete where item.getId();
     }
 
     @Override
