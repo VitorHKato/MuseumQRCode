@@ -47,6 +47,10 @@ public class HomeActivity extends AppCompatActivity {
 
                 // Display a toast message with the selected item
                 Toast.makeText(getApplicationContext(), "Selected Item: " + selectedItem, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), ItemActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -55,19 +59,19 @@ public class HomeActivity extends AppCompatActivity {
     public List<Item> populateItems(){
         List<Item> items = new ArrayList<>();
 
-        Item i = new Item("Mac 1975", 1975, "mac asdasd");
+        Item i = new Item(1, "Mac 1975", 1975, "mac asdasd");
         items.add(i);
-        Item i2 = new Item("Windows Phone 1999", 1999, "windows phone asdasd");
+        Item i2 = new Item(2, "Windows Phone 1999", 1999, "windows phone asdasd");
         items.add(i2);
-        Item i3 = new Item("Nokia 1260", 1260, "Nokia 1260");
+        Item i3 = new Item(3, "Nokia 1260", 1260, "Nokia 1260");
         items.add(i3);
-        Item i4 = new Item("Mac 1975", 1975, "asdasdasdsad");
+        Item i4 = new Item(4, "Mac 1975", 1975, "asdasdasdsad");
         items.add(i4);
-        Item i5 = new Item("Mac 1975", 1975, "asdasdasdsad");
+        Item i5 = new Item(5, "Mac 1975", 1975, "asdasdasdsad");
         items.add(i5);
-        Item i6 = new Item("Mac 1975", 1975, "asdasdasdsad");
+        Item i6 = new Item(6, "Mac 1975", 1975, "asdasdasdsad");
         items.add(i6);
-        Item i7 = new Item("Mac 1975", 1975, "asdasdasdsad");
+        Item i7 = new Item(7, "Mac 1975", 1975, "asdasdasdsad");
         items.add(i7);
 
         return items;
@@ -121,7 +125,6 @@ public class HomeActivity extends AppCompatActivity {
 //        finish();
 //    }
 
-    //create model class item
     //add scroll in all activities
 
 }
