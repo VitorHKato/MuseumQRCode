@@ -46,29 +46,29 @@ public class RegisterActivity extends AppCompatActivity {
                     "Please fill all the fields.",
                     Toast.LENGTH_LONG
             ).show();
-        } else {
+        }
+        else if (password.getText().toString().length() < 6 || confirmPassword.getText().toString().length() < 6)
+        {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Digite uma senha de pelo menos 6 dígitos!",
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+        else if (!password.getText().toString().equals(confirmPassword.getText().toString()))
+        {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "As senhas não correspondem!",
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+        else {
             //Todo:Create new user on database, get the last id on database and +1 save
 
             //Check radioButton
             RadioButton selectedRadioButton = findViewById(userType.getCheckedRadioButtonId());
 
-            //TODO:Verify passwords match
-            //        if(senha.getText().toString().length() < 6 || confirmarSenha.getText().toString().length() < 6)
-            //        {
-            //            Toast.makeText(
-            //                    getApplicationContext(),
-            //                    "Digite uma senha de pelo menos 6 dígitos!",
-            //                    Toast.LENGTH_LONG
-            //            ).show();
-            //        }
-            //        else if(!senha.getText().toString().equals(confirmarSenha.getText().toString()))
-            //        {
-            //            Toast.makeText(
-            //                    getApplicationContext(),
-            //                    "As senhas não correspondem!",
-            //                    Toast.LENGTH_LONG
-            //            ).show();
-            //        }
             //        else
             //        {
             //            armazenarDadosUsuario();
