@@ -3,14 +3,19 @@ package com.example.qrcodemuseum;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.qrcodemuseum.model.DatabaseHelper;
 import com.example.qrcodemuseum.model.Item;
+import com.example.qrcodemuseum.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +24,13 @@ public class HomeActivity extends AppCompatActivity {
 
     //Components
     private ListView listItems;
+    private Button createItemButton;
+
+    private Long userId;
+    private User  user = new User();
+
+    private DatabaseHelper dbHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +38,19 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         listItems = findViewById(R.id.HomeListViewList);
+        createItemButton = findViewById(R.id.HomeButtonCreateItem);
+
+        //Get data from the previous activity
+        Intent intent = getIntent();
+        userId = intent.getLongExtra("userId", 1);
+
+        dbHelper = new DatabaseHelper(getApplicationContext());
+
+        //Get data from the logged user
+        getUserData();
+
+        //Validate create item button visibility
+        validateCreateItemButton();
 
         //Create adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -61,6 +86,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    //TODO: Alterar para puxar do banco
     public List<Item> populateItems(){
         List<Item> items = new ArrayList<>();
 
@@ -120,6 +146,34 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CreateItemActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void getUserData() {
+        db = dbHelper.getWritableDatabase();
+
+        String[] projection = {"id", "username", "userType"};
+        Cursor cursor = db.query("User", projection, null, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            Long id = cursor.getLong(cursor.getColumnIndexOrThrow("id"));
+            String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
+            Integer userType = cursor.getInt(cursor.getColumnIndexOrThrow("userType"));
+
+            if (userId.equals(id)) {
+                user.setUser(username);
+                user.setUserType(userType);
+            }
+        }
+        cursor.close();
+
+        dbHelper.close();
+        db.close();
+    }
+
+    private void validateCreateItemButton() {
+        if (user.getUserType() == 2 || user.getUserType() == 3) {
+            createItemButton.setVisibility(View.GONE);
+        }
     }
 
 //    @Override

@@ -11,7 +11,7 @@ public class User implements Serializable {
     private String password;
     private Integer userType; //1 - Teacher, 2 - Student, 3 - Visitor, 4 - Adm
 
-    private User() {
+    public User() {
 
     }
 

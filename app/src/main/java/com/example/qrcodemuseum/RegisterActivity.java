@@ -2,7 +2,10 @@ package com.example.qrcodemuseum;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.qrcodemuseum.model.DatabaseHelper;
 import com.example.qrcodemuseum.model.User;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -21,6 +25,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText password;
     private EditText confirmPassword;
     private RadioGroup userType;
+
+    private DatabaseHelper dbHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPassword = findViewById(R.id.RegisterEditTextConfirmPassword);
         userType = findViewById(R.id.RegisterRadioGroup);
 
+        dbHelper = new DatabaseHelper(getApplicationContext());
     }
 
     public void register(View view) {
@@ -64,36 +72,24 @@ public class RegisterActivity extends AppCompatActivity {
             ).show();
         }
         else {
-            //Todo:Create new user on database, get the last id on database and +1 save
-
             //Check radioButton
             RadioButton selectedRadioButton = findViewById(userType.getCheckedRadioButtonId());
 
-            //        else
-            //        {
-            //            armazenarDadosUsuario();
-            //
-            //            Intent intent = new Intent(getApplicationContext(), Cadastro3Activity.class);
-            //
-            //            intent.putExtra("usuario", usuario);
-            //
-            //            startActivity(intent);
-            //            finish();
-            //        }
-
             Integer userTypeNumber = (selectedRadioButton.getText().toString().equals("Student")) ? 2 : 1;
 
-            User user = new User(2, userName.getText().toString(), email.getText().toString(),
-                    phone.getText().toString(), password.getText().toString(), userTypeNumber);
+            long newRowId = createAccountDatabase(userTypeNumber);
 
             Toast.makeText(
                     getApplicationContext(),
-                    "Registered: " + user.getUser() + " " + user.getEmail() + " " + user.getPhone() + " "
-                            + user.getPassword() + " " + user.getId() + " " + user.getUserType(),
+                    "Registered: " + userName.getText().toString(),
                     Toast.LENGTH_LONG
             ).show();
 
+            db.close();
+            dbHelper.close();
+
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            intent.putExtra("userId", newRowId);
             startActivity(intent);
             finish();
         }
@@ -105,5 +101,18 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private long createAccountDatabase(Integer userTypeNumber) {
+        db = dbHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("username", userName.getText().toString());
+        contentValues.put("email", email.getText().toString());
+        contentValues.put("phone", phone.getText().toString());
+        contentValues.put("password", password.getText().toString());
+        contentValues.put("userType", userTypeNumber);
+
+        return db.insert("User", null, contentValues);
     }
 }
