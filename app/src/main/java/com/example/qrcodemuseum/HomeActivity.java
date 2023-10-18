@@ -45,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
         userId = intent.getLongExtra("userId", 1);
 
         dbHelper = new DatabaseHelper(getApplicationContext());
+        db = dbHelper.getReadableDatabase();
 
         //Get data from the logged user
         getUserData();
@@ -68,14 +69,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item
-                String selectedItem = returnTitles(populateItems())[position];
-
-                // Display a toast message with the selected item
-                Toast.makeText(getApplicationContext(), "Selected Item: " + selectedItem, Toast.LENGTH_SHORT).show();
+                //String selectedItem = returnTitles(populateItems())[position];
 
                 //Send the object to ItemActivity
-                Item item = new Item();
-                item = populateItems().get(position);
+                Item item = populateItems().get(position);
 
                 Intent intent = new Intent(getApplicationContext(), ItemActivity.class);
                 intent.putExtra("item", item);
@@ -86,24 +83,28 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    //TODO: Alterar para puxar do banco
     public List<Item> populateItems(){
         List<Item> items = new ArrayList<>();
 
-        Item i = new Item(1, "Mac 1975", 1975, "mac asdasd");
-        items.add(i);
-        Item i2 = new Item(2, "Windows Phone 1999", 1999, "windows phone asdasd");
-        items.add(i2);
-        Item i3 = new Item(3, "Nokia 1260", 1260, "Nokia 1260");
-        items.add(i3);
-        Item i4 = new Item(4, "Mac 1975", 1975, "asdasdasdsad");
-        items.add(i4);
-        Item i5 = new Item(5, "Mac 1975", 1975, "asdasdasdsad");
-        items.add(i5);
-        Item i6 = new Item(6, "Mac 1975", 1975, "asdasdasdsad");
-        items.add(i6);
-        Item i7 = new Item(7, "Mac 1975", 1975, "asdasdasdsad");
-        items.add(i7);
+        db = dbHelper.getWritableDatabase();
+
+        String[] projection = {"id", "title", "year", "description"};
+        Cursor cursor = db.query("Item", projection, null, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            String title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
+            String year = cursor.getString(cursor.getColumnIndexOrThrow("year"));
+            String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
+            Integer id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+
+            Item i = new Item(id, title, Integer.valueOf(year), description);
+            items.add(i);
+
+        }
+        cursor.close();
+
+        db.close();
+        dbHelper.close();
 
         return items;
     }
@@ -137,13 +138,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void createItem(View view) {
-        Toast.makeText(
-                getApplicationContext(),
-                "Create Item.",
-                Toast.LENGTH_LONG
-        ).show();
-
         Intent intent = new Intent(this, CreateItemActivity.class);
+        intent.putExtra("userId", userId);
         startActivity(intent);
         finish();
     }

@@ -9,7 +9,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     //TODO: Adicionar criação/drop de outras tabelas
-    private static final String TABLE_NAME = "User";
+    private static final String TABLE_NAME_USER = "User";
+    private static final String TABLE_NAME_ITEM = "Item";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -18,11 +19,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createUser());
+        db.execSQL(createItem());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_USER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_ITEM);
         onCreate(db);
     }
 
@@ -34,5 +37,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "phone"     + " VARCHAR(20) , " +
                 "password"  + " VARCHAR(50) , " +
                 "userType"  + " INTEGER);";
+    }
+
+    private String createItem() {
+        return "CREATE TABLE " + "Item" + " (" +
+                "id"          + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "title"       + " VARCHAR(50)  , " +
+                "year"        + " VARCHAR(4), " +
+                "description" + " VARCHAR(500) , " +
+                "user_id"     + " INTEGER);";
     }
 }
