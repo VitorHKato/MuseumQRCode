@@ -27,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button createItemButton;
 
     private Long userId;
-    private User  user = new User();
+    private User user = new User();
 
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
@@ -75,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
                 Item item = populateItems().get(position);
 
                 Intent intent = new Intent(getApplicationContext(), ItemActivity.class);
+                intent.putExtra("userType", user.getUserType());
                 intent.putExtra("item", item);
                 startActivity(intent);
                 finish();

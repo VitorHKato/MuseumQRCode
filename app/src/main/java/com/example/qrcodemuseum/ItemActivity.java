@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +19,11 @@ public class ItemActivity extends AppCompatActivity {
     private TextView title;
     private TextView year;
     private TextView description;
+    private Button deleteButton;
 
     private Item item;
+
+    private Integer userType;
 
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
@@ -32,9 +36,16 @@ public class ItemActivity extends AppCompatActivity {
         title = findViewById(R.id.ItemTextViewTitle);
         year = findViewById(R.id.ItemTextViewYear);
         description = findViewById(R.id.ItemTextViewDescription);
+        deleteButton = findViewById(R.id.ItemButtonDelete);
 
         Intent intent = getIntent();
         item = (Item) intent.getSerializableExtra("item");
+
+        //Get data from the previous activity
+        userType = intent.getIntExtra("userType", 1);
+
+        //Validate delete item button visibility
+        validateDeleteButton();
 
         dbHelper = new DatabaseHelper(getApplicationContext());
 
@@ -70,5 +81,11 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void validateDeleteButton() {
+        if (userType == 2 || userType == 3) {
+            deleteButton.setVisibility(View.GONE);
+        }
     }
 }
