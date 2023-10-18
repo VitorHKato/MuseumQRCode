@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void validateLogin() {
+        boolean valid = false;
+
         String[] projection = {"id", "username", "password"};
         Cursor cursor = db.query("User", projection, null, null, null, null, null);
 
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG
                 ).show();
 
+                valid = true;
+
                 db.close();
                 dbHelper.close();
 
@@ -71,11 +75,13 @@ public class MainActivity extends AppCompatActivity {
         }
         cursor.close();
 
-        //TODO: Corrigir a lógica dessa msg
-        Toast.makeText(
-                getApplicationContext(),
-                "Incorrect credentials",
-                Toast.LENGTH_LONG
-        ).show();
+        if (!valid) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Incorrect credentials",
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+
     }
 }
