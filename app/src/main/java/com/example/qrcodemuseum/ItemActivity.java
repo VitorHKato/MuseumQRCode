@@ -3,11 +3,13 @@ package com.example.qrcodemuseum;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qrcodemuseum.model.DatabaseHelper;
 import com.example.qrcodemuseum.model.Item;
 
 public class ItemActivity extends AppCompatActivity {
@@ -18,6 +20,9 @@ public class ItemActivity extends AppCompatActivity {
     private TextView description;
 
     private Item item;
+
+    private DatabaseHelper dbHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +36,32 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         item = (Item) intent.getSerializableExtra("item");
 
+        dbHelper = new DatabaseHelper(getApplicationContext());
+
         title.setText(item.getTitle());
         year.setText(item.getYear().toString());
         description.setText(item.getDescription());
     }
 
     public void delete(View view) {
+        db = dbHelper.getWritableDatabase();
+
+        String[] selectionArgs = {item.getId().toString()};
+
+        db.delete("Item", "id = ?", selectionArgs);
+
         Toast.makeText(
                 getApplicationContext(),
-                "Delete",
-                Toast.LENGTH_LONG
-        ).show();
+                "Item deleted.",
+                Toast.LENGTH_LONG).show();
 
-        //TODO: Implementar delete
-        //delete where item.getId();
+        db.close();
+        dbHelper.close();
+
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(intent);
+        finish();
+
     }
 
     @Override
