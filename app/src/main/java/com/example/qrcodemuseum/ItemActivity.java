@@ -21,6 +21,7 @@ public class ItemActivity extends AppCompatActivity {
     private TextView description;
     private Button deleteButton;
 
+    private Long userId;
     private Item item;
 
     private Integer userType;
@@ -43,6 +44,7 @@ public class ItemActivity extends AppCompatActivity {
 
         //Get data from the previous activity
         userType = intent.getIntExtra("userType", 1);
+        userId = intent.getLongExtra("userId", 1);
 
         //Validate delete item button visibility
         validateDeleteButton();
@@ -75,10 +77,13 @@ public class ItemActivity extends AppCompatActivity {
 
     }
 
+    //TODO: criar botão de edit, re-aproveitar tela da criação
+
     @Override
     public void onBackPressed()
     {
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        intent.putExtra("userId", userId);
         startActivity(intent);
         finish();
     }

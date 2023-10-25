@@ -71,6 +71,7 @@ public class CreateItemActivity extends AppCompatActivity {
     public void onBackPressed()
     {
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        intent.putExtra("userId", userId);
         startActivity(intent);
         finish();
     }

@@ -76,6 +76,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), ItemActivity.class);
                 intent.putExtra("userType", user.getUserType());
+                intent.putExtra("userId", userId);
                 intent.putExtra("item", item);
                 startActivity(intent);
                 finish();
@@ -181,6 +182,6 @@ public class HomeActivity extends AppCompatActivity {
 //        finish();
 //    }
 
-    //add scroll in all activities
+    //TODO: add scroll in all activities
 
 }
