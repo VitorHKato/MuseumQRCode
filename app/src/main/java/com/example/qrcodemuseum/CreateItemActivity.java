@@ -4,15 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.qrcodemuseum.model.DatabaseHelper;
-import com.example.qrcodemuseum.model.Item;
 
 public class CreateItemActivity extends AppCompatActivity {
 
@@ -22,6 +21,7 @@ public class CreateItemActivity extends AppCompatActivity {
     private EditText description;
 
     private Long userId;
+    private Integer itemId;
 
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
@@ -39,8 +39,12 @@ public class CreateItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getLongExtra("userId", 1);
 
+        //Get data from edit item
+        itemId = intent.getIntExtra("itemId", 0);
+
         dbHelper = new DatabaseHelper(getApplicationContext());
 
+        loadItem();
     }
 
     public void save(View view) {
@@ -85,9 +89,38 @@ public class CreateItemActivity extends AppCompatActivity {
         contentValues.put("description", description.getText().toString());
         contentValues.put("user_id", userId.toString());
 
-        db.insert("Item", null, contentValues);
+        if (itemId == 0) {
+            db.insert("Item", null, contentValues);
+        } else {
+            String[] whereArgs = { String.valueOf(itemId) };
+            db.update("Item", contentValues, "id = ?", whereArgs);
+        }
 
         db.close();
         dbHelper.close();
+    }
+
+    public void loadItem() {
+        if (itemId != 0) {
+            db = dbHelper.getReadableDatabase();
+
+            String[] projection = {"id", "title", "year", "description"};
+            Cursor cursor = db.query("Item", projection, null, null, null, null, null);
+
+            while (cursor.moveToNext()) {
+                String titleItem = cursor.getString(cursor.getColumnIndexOrThrow("title"));
+                String yearItem = cursor.getString(cursor.getColumnIndexOrThrow("year"));
+                String descriptionItem = cursor.getString(cursor.getColumnIndexOrThrow("description"));
+                Integer id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+
+                if (id.equals(itemId)) {
+                    title.setText(titleItem);
+                    year.setText(yearItem);
+                    description.setText(descriptionItem);
+                }
+
+            }
+            cursor.close();
+        }
     }
 }

@@ -20,6 +20,7 @@ public class ItemActivity extends AppCompatActivity {
     private TextView year;
     private TextView description;
     private Button deleteButton;
+    private Button editButton;
 
     private Long userId;
     private Item item;
@@ -38,6 +39,7 @@ public class ItemActivity extends AppCompatActivity {
         year = findViewById(R.id.ItemTextViewYear);
         description = findViewById(R.id.ItemTextViewDescription);
         deleteButton = findViewById(R.id.ItemButtonDelete);
+        editButton = findViewById(R.id.ItemButtonEdit);
 
         Intent intent = getIntent();
         item = (Item) intent.getSerializableExtra("item");
@@ -46,8 +48,8 @@ public class ItemActivity extends AppCompatActivity {
         userType = intent.getIntExtra("userType", 1);
         userId = intent.getLongExtra("userId", 1);
 
-        //Validate delete item button visibility
-        validateDeleteButton();
+        //Validate delete/edit item button visibility
+        validaButtons();
 
         dbHelper = new DatabaseHelper(getApplicationContext());
 
@@ -77,7 +79,13 @@ public class ItemActivity extends AppCompatActivity {
 
     }
 
-    //TODO: criar botão de edit, re-aproveitar tela da criação
+    public void edit(View view) {
+
+        Intent intent = new Intent(getApplicationContext(), CreateItemActivity.class);
+        intent.putExtra("itemId", item.getId());
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     public void onBackPressed()
@@ -88,9 +96,10 @@ public class ItemActivity extends AppCompatActivity {
         finish();
     }
 
-    private void validateDeleteButton() {
+    private void validaButtons() {
         if (userType == 2 || userType == 3) {
             deleteButton.setVisibility(View.GONE);
+            editButton.setVisibility(View.GONE);
         }
     }
 }
