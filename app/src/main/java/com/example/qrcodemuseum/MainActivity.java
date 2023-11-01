@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.qrcodemuseum.model.DatabaseHelper;
+import com.example.qrcodemuseum.model.Persistence;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
+
+    private Persistence persistence;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(getApplicationContext());
         db = dbHelper.getReadableDatabase();
+
+        //Load last login data
+        loadLoginData();
     }
 
     public void login(View view) {
@@ -67,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
                 db.close();
                 dbHelper.close();
 
+                try {
+                    persistence = new Persistence(username, password, getApplicationContext());
+                    persistence.generateFile();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 Intent intent = new Intent(this, HomeActivity.class);
                 intent.putExtra("userId", id);
                 startActivity(intent);
@@ -83,5 +96,17 @@ public class MainActivity extends AppCompatActivity {
             ).show();
         }
 
+    }
+
+    public void loadLoginData() {
+        persistence = new Persistence();
+        persistence.setContext(getApplicationContext());
+
+        String[] data = persistence.returnValues();
+
+        if(data != null) {
+            editTextUser.setText(data[0]);
+            editTextPassword.setText(data[1]);
+        }
     }
 }
