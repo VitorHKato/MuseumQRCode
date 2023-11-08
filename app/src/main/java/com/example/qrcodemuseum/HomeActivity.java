@@ -131,12 +131,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void checkIn(View view) {
-        Toast.makeText(
-                getApplicationContext(),
-                "Check In.",
-                Toast.LENGTH_LONG
-        ).show();
-
+        Intent intent = new Intent(this, CheckInActivity.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
+        finish();
     }
 
     public void createItem(View view) {

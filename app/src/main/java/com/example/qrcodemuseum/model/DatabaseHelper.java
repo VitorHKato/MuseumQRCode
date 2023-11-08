@@ -11,6 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //TODO: Adicionar criação/drop de outras tabelas
     private static final String TABLE_NAME_USER = "User";
     private static final String TABLE_NAME_ITEM = "Item";
+    private static final String TABLE_NAME_CHECKIN = "Checkin";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -20,12 +21,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createUser());
         db.execSQL(createItem());
+        db.execSQL(createCheckin());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_ITEM);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_CHECKIN);
         onCreate(db);
     }
 
@@ -45,6 +48,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "title"       + " VARCHAR(50)  , " +
                 "year"        + " VARCHAR(4), " +
                 "description" + " VARCHAR(500) , " +
+                "user_id"     + " INTEGER);";
+    }
+
+    private String createCheckin() {
+        return "CREATE TABLE " + "Checkin" + " (" +
+                "id"          + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "postalCode"  + " VARCHAR(50)  , " +
+                "addressLine" + " VARCHAR(200) , " +
+                "city"        + " VARCHAR(100) , " +
+                "state"       + " VARCHAR(100) , " +
+                "country"     + " VARCHAR(100) , " +
+                "datetime"    + " VARCHAR(100) , " +
                 "user_id"     + " INTEGER);";
     }
 }
