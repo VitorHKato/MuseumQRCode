@@ -1,5 +1,6 @@
 package com.example.qrcodemuseum;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import com.example.qrcodemuseum.model.DatabaseHelper;
 import com.example.qrcodemuseum.model.Item;
 import com.example.qrcodemuseum.model.User;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,11 +125,72 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void scanQRCode(View view) {
-        Toast.makeText(
-                getApplicationContext(),
-                "Scan QRCode.",
-                Toast.LENGTH_LONG
-        ).show();
+        IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        intentIntegrator.setPrompt("SCAN");
+        intentIntegrator.setCameraId(0);
+        intentIntegrator.initiateScan();
+
+    }
+
+    private Item getItem(String titleQrCode) {
+        db = dbHelper.getWritableDatabase();
+
+        String[] projection = {"id", "title", "year", "description"};
+        Cursor cursor = db.query("Item", projection, null, null, null, null, null);
+
+        Item i = new Item();
+
+        while (cursor.moveToNext()) {
+            String title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
+
+            if (titleQrCode.equals(title)) {
+                String year = cursor.getString(cursor.getColumnIndexOrThrow("year"));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
+                Integer id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+
+                i.setId(id);
+                i.setTitle(title);
+                i.setDescription(description);
+                i.setYear(Integer.valueOf(year));
+            }
+
+        }
+        cursor.close();
+
+        db.close();
+        dbHelper.close();
+
+        return i;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+
+        if(intentResult != null){
+            if (intentResult.getContents() !=  null){
+                Item a = getItem(intentResult.getContents());
+
+                if (a.getId() != null) {
+                    Intent intent = new Intent(getApplicationContext(), ItemActivity.class);
+                    intent.putExtra("userType", user.getUserType());
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("item", a);
+                    startActivity(intent);
+                    finish();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),
+                            "Item not found.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        }else{
+            super.onActivityResult(requestCode, resultCode, data);
+        }
 
     }
 
@@ -171,15 +235,4 @@ public class HomeActivity extends AppCompatActivity {
             createItemButton.setVisibility(View.GONE);
         }
     }
-
-//    @Override
-//    public void onBackPressed()
-//    {
-//        Intent intent = new Intent(getApplicationContext(), Cadastro2Activity.class);
-//        startActivity(intent);
-//        finish();
-//    }
-
-    //TODO: add scroll in all activities
-
 }
